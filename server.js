@@ -7,7 +7,6 @@ const config = require('./config')
 const path = require('path')
 const images = require('./routes/images')
 
-app.use('/images',images)
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.engine('handlebars', hdbs({defaultLayout: 'main'}))
@@ -18,6 +17,7 @@ app.use(bodyParser.json())
 app.get('/',(req,res)=>{
     res.render('home')
 })
+app.use('/images',images)
 
 mongoose.connect(config.MONGODB_URL,{ useNewUrlParser: true },(err, res)=>{
 	if(err)throw err
