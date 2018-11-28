@@ -4,15 +4,16 @@ const Image = require('../models/images')
 const fs = require('fs')
 const mongoose = require('mongoose')
 const upload = require('../multer/storage')
+const { isAuthenticated } = require('../helpers/auth')
 
-router.route('/')
-    .get((req,res)=>{
-        Image.find({},(err,images)=>{
-            if(err)throw err
-            res.render('images',{images:images})
-        })
+router.get('/',isAuthenticated,(req,res)=>{
+    Image.find({},(err,images)=>{
+        if(err)throw err
+        res.render('images',{images:images})
     })
-    .post((req, res, next)=>{
+})
+    
+   router.post('/',isAuthenticated,(req, res, next)=>{
         upload(req, res, function (err) {
             // need to check if the req.file is set.
             if(req.file == null || req.file == undefined || req.file == ""){
