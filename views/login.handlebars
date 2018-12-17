@@ -1,5 +1,41 @@
-<form action="/user/login" method="POST">
-<input type="text" name="username" placeholder="username">
-<input type="password" name="password" placeholder="password">
-<input type="submit" value="Login">
-</form>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      Home
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+<section class="hero has-background-white-bis is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-black">Login</h3>
+                <p class="subtitle has-text-black">Por favor logueate para continuar</p>
+                <div class="box">
+                    <form action="/user/login" method="POST">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input " type="text" placeholder="Tu usuario" autofocus="" required=""
+                                    maxlength="15" name="username">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input class="input " type="password" placeholder="Tu contraseña" required="" maxlength="15"
+                                    name="password">
+                            </div>
+                        </div>
+                        <button class="button is-block has-background-primary is-large is-fullwidth">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

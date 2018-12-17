@@ -10,6 +10,7 @@ const images = require('./routes/images')
 const user = require('./routes/user')
 const session = require('express-session')
 const passport = require('passport')
+const img = require('./models/images')
 const flash = require('connect-flash')
 require('./helpers/passport') 
 
@@ -17,7 +18,7 @@ require('./helpers/passport')
 app.use(express.static(path.join(__dirname, 'public')));
 app.engine('handlebars', hdbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 app.use(session({
 	secret: config.secret,
@@ -32,7 +33,12 @@ app.use(flash());
 
 //RUTAS
 app.get('/',(req,res)=>{
-    res.render('home')
+	img.find({},(err,imgs)=>{
+		if(err)throw err
+		console.log(imgs)
+		res.render('home',{imgs:imgs})
+	})
+   
 })
 
 app.use('/images',images)
