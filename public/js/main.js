@@ -1,55 +1,34 @@
 window.onload = function() {
-  //AJAX TAB NAV
-  let imgs;
-  let filters = document.querySelectorAll(".filter");
-  filtersArray = Array.prototype.slice.call(filters);
-  let itemTab = document.querySelectorAll(".list-item-tab");
-  itemTab.forEach(item => {
-    item.addEventListener("click", function() {
-      itemTab.forEach(it =>{
-        it.classList.remove('is-active')
-      })
-      item.classList.add("is-active");
-      imgs = document.querySelectorAll('.item-img')
-    });
-  });
-
   getImages("Todo");
+  
+  setTimeout(function(){
+    const images=Array.from(document.querySelectorAll('.item-gallery'))
+    images.forEach(img => img.addEventListener('click',modal))
+    console.log(images)
+  },3000)
+}
+function displayModal(url){
+  let modal = document.querySelector('.modal')
+  let modalImg = modal.querySelector('.image-modal img')
+  console.log(modalImg)
+  modalImg.src=url
+  modal.style.display='flex'
+  
+}
 
-  filtersArray.forEach(filter => {
-    filter.addEventListener("click", function(e) {
-      getImages(filter.text);
-      e.preventDefault();
-    });
-  });
-
-  //PRELOADER
-  let preloader = document.querySelector("#preloader");
-  setTimeout(function() {
-    preloader.style.display = "none";
-  }, 2000);
-
-  //DATE
-  let dateDiv = document.querySelector("#date");
-  let date = new Date();
-  dateDiv.innerHTML += date.getFullYear();
-
-  //MODAL
-  let exitBtn = document.querySelectorAll('.item-img .modal .exitBtn')
-exitBtn.forEach( btn =>{
- console.log(btn)
-})
-};
+function exitBtn(){
+  let modal = document.querySelector('.modal')
+  let modalImg = modal.querySelector('.image-modal img')
+  modalImg.src=''
+  modal.style.display='none'
+}
+function modal(e){
+  let urlImg = e.target.src
+  displayModal(urlImg)
+}
 
 const getImages = function(params) {
-  let container = document.querySelector("#container-img");
-  let noFoundImages = `<div class='container'>
-  <div class='columns'>
-  <div class='column is-half is-offset-one-quarter is-size-1 has-text-warning' style='text-align:center; font-family: 'Raleway', sans-serif;'>
-  <p>No hay imagenes</p>
-  </div>
-  </div>
-    </div>`;
+  let container = document.querySelector(".items");
   var xhttp = new XMLHttpRequest();
   container.innerHTML = "";
   xhttp.onreadystatechange = function() {
@@ -59,15 +38,9 @@ const getImages = function(params) {
       data = data.images;
       if (data) {
         for (var i in data) {
-          let output = `<div class='item-img' onclick='modal(this)'>
-                              <img data-aos="fade-up-right" class='img-i item-img'  src='images/${data[i].image}'/>
-                              <div class='overlay'><p>Aumentar</p></div>
-                              
-                              <div class='modal'>
-                                <img src='images/${data[i].image}'>
-                                <span class='exitBtn' >X</span>
-                              </div>
-                        </div>
+          
+          let output = `<article class="item  thumb span-1"><h2>${data[i].title}</h2><a href="#" class="image"><img class='item-gallery' src="images/${data[i].image}" alt=""></a></article>
+
                               `;
           if (data[i].tags[0] === params) {
             container.innerHTML += output;
@@ -82,11 +55,5 @@ const getImages = function(params) {
   };
   xhttp.open("GET", "/images/allimages", true);
   xhttp.send();
-  
-};
 
-function modal(e){
-  e = e.querySelector('.modal')
-  e.classList.toggle('is-active')
 }
-
