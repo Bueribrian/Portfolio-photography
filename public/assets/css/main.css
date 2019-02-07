@@ -812,13 +812,19 @@ input, select, textarea {
 	width: 100%;
 	height: 100vh;
 	position: fixed;
-	background: rgba(0,0,0,0.6);
+	background: rgba(0,0,0,0.9);
 	z-index: 99999;
 	display: none;
 	justify-content: center;
 	align-items: center;
 	padding: 3rem;
 	box-sizing: border-box;
+}
+@keyframes appear{
+	0%{
+		transform: scale(0.7);
+		opacity: 0.3;
+	}
 }
 .exitBtn{
 	position: absolute;
@@ -829,7 +835,8 @@ input, select, textarea {
 	cursor: pointer;
 }
 .image-modal{
-	
+	transition: .1s all ease-in-out;
+	animation: appear .2s linear;
 
 }
 .image-modal img{

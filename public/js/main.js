@@ -36,10 +36,14 @@ const getImages = function(params) {
       // Action to be performed when the document is read;
       let data = JSON.parse(this.responseText);
       data = data.images;
+      container.innerHTML = `<div class="item intro span-2">
+      <h1>Nadia Bueri</h1>
+      <p>Galeria de fotos, por la fotografa amateur Nadia.</p>
+</div>`
       if (data) {
         for (var i in data) {
           
-          let output = `<article class="item  thumb span-1"><h2>${data[i].title}</h2><a href="#" class="image"><img class='item-gallery' src="images/${data[i].image}" alt=""></a></article>
+          let output = `<article class="item  thumb span-1"><a href="#" class="image"><img class='item-gallery' src="images/${data[i].image}" alt=""></a></article>
 
                               `;
           if (data[i].tags[0] === params) {
